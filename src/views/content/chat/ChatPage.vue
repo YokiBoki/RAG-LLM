@@ -272,10 +272,12 @@ onUnmounted(() => {
   justify-content: center;
   width: 100%;
   padding: 10px; /* 略微增加内边距 */
+  margin-top: 5px;
+  margin-bottom: 5px;
   background: linear-gradient(to right, #0069e0, #0052bc); /* 改用更深的蓝色渐变 */
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius:8px;
   cursor: pointer;
   transition: opacity 0.3s;
   font-size: 14px; /* 加大字号 */
@@ -293,9 +295,9 @@ onUnmounted(() => {
 
 .history-list li {
   padding: 10px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   background-color: #ffffff;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
 }

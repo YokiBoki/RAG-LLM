@@ -3,6 +3,9 @@
     <div class="background">
       <div class="glow"></div>
     </div>
+    <div class="bubbles">
+      <div class="bubble" v-for="n in 15" :key="n"></div>
+    </div>
     <div class="content">
       <div class="center-content">
         <h1>为什么不问问神奇海螺呢？</h1>
@@ -172,6 +175,160 @@ p {
   }
   100% {
     background-position: 0 0;
+  }
+}
+
+.bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: rise 10s infinite ease-in;
+}
+
+.bubble:nth-child(1) {
+  width: 40px;
+  height: 40px;
+  left: 10%;
+  animation-duration: 8s;
+}
+
+.bubble:nth-child(2) {
+  width: 20px;
+  height: 20px;
+  left: 20%;
+  animation-duration: 5s;
+  animation-delay: 1s;
+}
+
+.bubble:nth-child(3) {
+  width: 50px;
+  height: 50px;
+  left: 35%;
+  animation-duration: 7s;
+  animation-delay: 2s;
+}
+
+.bubble:nth-child(4) {
+  width: 30px;
+  height: 30px;
+  left: 50%;
+  animation-duration: 11s;
+  animation-delay: 0s;
+}
+
+.bubble:nth-child(5) {
+  width: 45px;
+  height: 45px;
+  left: 65%;
+  animation-duration: 6s;
+  animation-delay: 1s;
+}
+
+.bubble:nth-child(6) {
+  width: 25px;
+  height: 25px;
+  left: 75%;
+  animation-duration: 8s;
+  animation-delay: 3s;
+}
+
+.bubble:nth-child(7) {
+  width: 35px;
+  height: 35px;
+  left: 85%;
+  animation-duration: 12s;
+  animation-delay: 2s;
+}
+
+.bubble:nth-child(8) {
+  width: 28px;
+  height: 28px;
+  left: 30%;
+  animation-duration: 6s;
+  animation-delay: 4s;
+}
+
+.bubble:nth-child(9) {
+  width: 42px;
+  height: 42px;
+  left: 55%;
+  animation-duration: 9s;
+  animation-delay: 3s;
+}
+
+.bubble:nth-child(10) {
+  width: 38px;
+  height: 38px;
+  left: 40%;
+  animation-duration: 7s;
+  animation-delay: 5s;
+}
+
+.bubble:nth-child(11) {
+  width: 32px;
+  height: 32px;
+  left: 70%;
+  animation-duration: 10s;
+  animation-delay: 4s;
+}
+
+.bubble:nth-child(12) {
+  width: 46px;
+  height: 46px;
+  left: 15%;
+  animation-duration: 8s;
+  animation-delay: 2s;
+}
+
+.bubble:nth-child(13) {
+  width: 24px;
+  height: 24px;
+  left: 60%;
+  animation-duration: 11s;
+  animation-delay: 1s;
+}
+
+.bubble:nth-child(14) {
+  width: 36px;
+  height: 36px;
+  left: 25%;
+  animation-duration: 9s;
+  animation-delay: 3s;
+}
+
+.bubble:nth-child(15) {
+  width: 44px;
+  height: 44px;
+  left: 80%;
+  animation-duration: 7s;
+  animation-delay: 5s;
+}
+
+@keyframes rise {
+  0% {
+    bottom: -100px;
+    transform: translateX(0);
+  }
+  50% {
+    transform: translate(100px, -500px);
+  }
+  100% {
+    bottom: 1080px;
+    transform: translateX(-200px);
   }
 }
 </style>
