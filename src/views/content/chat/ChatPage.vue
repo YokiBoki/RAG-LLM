@@ -5,11 +5,14 @@
       <div class="new-chat-container">
         <button class="new-chat-btn" @click="newConversation">
           新建对话
-          <el-icon class="plus-icon"><Plus /></el-icon>
+          <el-icon class="plus-icon">
+            <Plus/>
+          </el-icon>
         </button>
       </div>
       <ul class="history-list">
-        <li v-for="(item, index) in historyList" :key="index" @click="selectConversation(index)" :class="{ active: currentConversationIndex === index }">
+        <li v-for="(item, index) in historyList" :key="index" @click="selectConversation(index)"
+            :class="{ active: currentConversationIndex === index }">
           {{ item.title }}
         </li>
       </ul>
@@ -31,7 +34,7 @@
             </div>
             <div class="content">
               {{ message.content }}
-<!--              <audio v-if="message.audioUrl" :src="message.audioUrl" controls></audio>-->
+              <!--              <audio v-if="message.audioUrl" :src="message.audioUrl" controls></audio>-->
               <!-- <AudioBase></AudioBase> -->
             </div>
           </div>
@@ -40,36 +43,40 @@
         <!-- 输入框 -->
         <div class="input-area">
           <div class="input-wrapper">
-            <el-icon class="input-icon link-icon"><Link /></el-icon>
+            <el-icon class="input-icon link-icon">
+              <Link/>
+            </el-icon>
             <input
-              v-model="userInput"
-              @keyup.enter="sendMessage"
-              placeholder="输入消息，按回车发送..."
-              type="text"
-              :disabled="isInputDisabled"
+                v-model="userInput"
+                @keyup.enter="sendMessage"
+                placeholder="输入消息，按回车发送..."
+                type="text"
+                :disabled="isInputDisabled"
             >
             <div class="button-group">
               <div class="audio-wave" v-if="isRecording" @click="finishRecording">
                 <span v-for="n in 4" :key="n" :style="{ animationDelay: `${n * 0.2}s` }"></span>
               </div>
               <el-icon v-else class="input-icon microphone-icon" @click="toggleRecording">
-                <Microphone />
+                <Microphone/>
               </el-icon>
               <div class="separator"></div>
               <el-popover
-                placement="top"
-                :width="200"
-                trigger="hover"
-                :disabled="!!userInput.trim()"
+                  placement="top"
+                  :width="200"
+                  trigger="hover"
+                  :disabled="!!userInput.trim()"
               >
                 <template #reference>
-                  <el-button 
-                    class="send-button" 
-                    circle 
-                    @click="sendMessage"
-                    :disabled="!userInput.trim()"
+                  <el-button
+                      class="send-button"
+                      circle
+                      @click="sendMessage"
+                      :disabled="!userInput.trim()"
                   >
-                    <el-icon><Top /></el-icon>
+                    <el-icon>
+                      <Top/>
+                    </el-icon>
                   </el-button>
                 </template>
                 <span>请文字/录音/上传语音回复</span>
@@ -77,25 +84,33 @@
             </div>
           </div>
         </div>
-        
-        <div class="disclaimer">服务生成的所有内容均由魔法海螺生成，其生成内容的准确性和完整性无法保证，不代表UP主的态度或观点</div>
+
+        <div class="disclaimer">
+          服务生成的所有内容均由魔法海螺生成，其生成内容的准确性和完整性无法保证，不代表UP主的态度或观点
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue';
-import { Link, Microphone } from '@element-plus/icons-vue';
+import {ref, computed, nextTick, onMounted, onUnmounted} from 'vue';
+import {Link, Microphone} from '@element-plus/icons-vue';
+import {ElMessage} from 'element-plus';
 // import AudioBase from "@/components/AudioBase.vue";
+import {get, post} from '@/utils/request'
+import {API} from '@/api/config'
 
 const historyList = ref([
-  { 
+  {
     title: '蟹堡制作咨询',
     messages: [
-      { role: 'assistant', content: '您好！我是蟹堡王的神奇海螺，我注意到您最近在制作蟹堡时遇到了一些困难？' },
-      { role: 'user', content: '是的，我的蟹堡总是做不好，口感跟章鱼哥做的差太多了。' },
-      { role: 'assistant', content: '别担心！让我来帮您分析一下。首先，您是否严格按照蟹堡秘方的比例在调配调味料呢？另外，确保使用新鲜的海藻面包也很重要。' }
+      {role: 'assistant', content: '您好！我是蟹堡王的神奇海螺，我注意到您最近在制作蟹堡时遇到了一些困难？'},
+      {role: 'user', content: '是的，我的蟹堡总是做不好，口感跟章鱼哥做的差太多了。'},
+      {
+        role: 'assistant',
+        content: '别担心！让我来帮您分析一下。首先，您是否严格按照蟹堡秘方的比例在调配调味料呢？另外，确保使用新鲜的海藻面包也很重要。'
+      }
     ]
   },
   // { 
@@ -112,15 +127,15 @@ const historyList = ref([
   //     { role: 'assistant', content: '是的，我们提供送餐服务！水母荡在我们的配送范围内。派大星是我们最可靠的送餐员，保证30分钟内送达，否则您可以获得一个免费的海藻汉堡！' }
   //   ]
   // },
-  { 
+  {
     title: '这里都是前端写死的',
   },
-  { 
+  {
     title: '因为后端还没接数据库',
-    },
-    { 
-      title: '大家要用的话自己改一下',
-    }
+  },
+  {
+    title: '大家要用的话自己改一下',
+  }
 ]);
 
 const currentConversationIndex = ref(0);
@@ -145,28 +160,43 @@ const selectConversation = (index) => {
 const newConversation = () => {
   historyList.value.unshift({
     title: '新对话',
-    messages: [{ role: 'assistant', content: '您好！我是蟹堡王的神奇海螺，很高兴为您服务！我可以回答关于蟹堡王和汉堡制作的任何问题，您有什么需要帮助的吗？' }]
+    // 实际上这里要和后端交互的话，messages 最好用 map 格式，key 是对应的 id，这样方便后端根据 id 来操作消息
+    messages: [{
+      role: 'assistant',
+      content: '您好！我是蟹堡王的神奇海螺，很高兴为您服务！我可以回答关于蟹堡王和汉堡制作的任何问题，您有什么需要帮助的吗？'
+    }]
   });
   currentConversationIndex.value = 0;
 };
 
-const sendMessage = () => {
+const sendMessage = async () => {
   if (userInput.value.trim()) {
-    currentConversation.value.messages.push({ role: 'user', content: userInput.value });
+    // 添加用户消息
+    currentConversation.value.messages.push({role: 'user', content: userInput.value});
+    const prompt = userInput.value;
     userInput.value = '';
     nextTick(() => {
       scrollToBottom();
     });
-    // 模拟AI回复
-    setTimeout(() => {
-      currentConversation.value.messages.push({ 
-        role: 'assistant', 
-        content: '作为蟹堡王的神奇海螺，我很乐意为您解答关于美味蟹堡的任何问题。不过请记住，蟹堡的秘方配方是绝密哦！' 
-      });
-      nextTick(() => {
-        scrollToBottom();
-      });
-    }, 1000);
+
+    // 获取AI回复
+    try {
+      const res = await get(API.GENERATE, {prompt: prompt});
+      if (res.code == 100) {
+        currentConversation.value.messages.push({
+          role: 'assistant',
+          content: res.data
+        });
+        nextTick(() => {
+          scrollToBottom();
+        });
+      } else {
+        ElMessage.error(res.msg);
+      }
+    } catch (error) {
+      console.error('sendMessage error', error);
+      ElMessage.error('获取回复失败，请稍后重试');
+    }
   }
 };
 
@@ -188,37 +218,10 @@ const sendAudioMessage = (audioBlob) => {
   nextTick(() => {
     scrollToBottom();
   });
-  
+
 };
 
 const toggleRecording = async () => {
-  // if (!isRecording.value) {
-  //   try {
-  //     mediaStream.value = await navigator.mediaDevices.getUserMedia({ audio: true });
-  //     mediaRecorder = new MediaRecorder(mediaStream.value);
-  //     audioChunks = [];
-
-  //     mediaRecorder.ondataavailable = (event) => {
-  //       audioChunks.push(event.data);
-  //     };
-
-  //     mediaRecorder.onstop = () => {
-  //       const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-  //       console.log('录音已保存', audioBlob);
-  //       sendAudioMessage(audioBlob);
-  //       stopMediaStream();
-  //       isInputDisabled.value = false;
-  //     };
-
-  //     mediaRecorder.start();
-  //     isRecording.value = true;
-  //     isInputDisabled.value = true;
-  //   } catch (err) {
-  //     console.error('无法访问麦克风', err);
-  //   }
-  // } else {
-  //   finishRecording();
-  // }
 };
 
 const stopMediaStream = () => {
@@ -233,7 +236,6 @@ const scrollToBottom = () => {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 };
 
-const visitorName = ref('Test Customer');
 
 onMounted(() => {
 });
@@ -271,13 +273,13 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 10px; /* 略微增加内边距 */
-  margin-top: 5px;
+  padding: 13px; /* 略微增加内边距 */
+  margin-top: 10px;
   margin-bottom: 5px;
   background: linear-gradient(to right, #0069e0, #0052bc); /* 改用更深的蓝色渐变 */
   color: white;
   border: none;
-  border-radius:8px;
+  border-radius: 8px;
   cursor: pointer;
   transition: opacity 0.3s;
   font-size: 14px; /* 加大字号 */
@@ -313,9 +315,9 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, 
-    rgba(0, 105, 224, 0.08),
-    rgba(0, 56, 148, 0.08)
+  background: linear-gradient(135deg,
+  rgba(0, 105, 224, 0.08),
+  rgba(0, 56, 148, 0.08)
   );
 }
 
@@ -326,7 +328,7 @@ onUnmounted(() => {
   flex-direction: column;
   background-color: transparent;
   box-shadow: none;
-  padding-top: 20px; /* 添加顶部内边距 */
+  padding-top: 12px; /* 添加顶部内边距 */
   /* padding-left: 10%;
   padding-right: 10%; */
 }
@@ -397,7 +399,7 @@ onUnmounted(() => {
 }
 
 .message .content {
-  background-color: rgba(255, 255, 255,1);
+  background-color: rgba(255, 255, 255, 1);
   padding: 12px 18px; /* 增加内边距 */
   border-radius: 10px;
   max-width: 80%;
@@ -537,8 +539,12 @@ input::placeholder {
 }
 
 @keyframes audio-wave {
-  0%, 100% { transform: scaleY(0.3); }
-  50% { transform: scaleY(1); }
+  0%, 100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
 }
 
 .message .content audio {
