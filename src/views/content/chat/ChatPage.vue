@@ -106,7 +106,7 @@ const historyList = ref([
     title: '蟹堡制作咨询',
     messages: [
       {role: 'assistant', content: '您好！我是蟹堡王的神奇海螺，我注意到您最近在制作蟹堡时遇到了一些困难？'},
-      {role: 'user', content: '是的，我的蟹堡总是做不好，口感跟章鱼哥做的差太多了。'},
+      {role: 'user', content: '是的，我的蟹堡总是做不好，口感跟海绵宝宝做的差太多了。'},
       {
         role: 'assistant',
         content: '别担心！让我来帮您分析一下。首先，您是否严格按照蟹堡秘方的比例在调配调味料呢？另外，确保使用新鲜的海藻面包也很重要。'
