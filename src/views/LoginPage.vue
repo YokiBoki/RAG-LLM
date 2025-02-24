@@ -9,7 +9,7 @@
     <div class="content">
       <div class="center-content">
         <h1>为什么不问问神奇海螺呢？</h1>
-        <p>关于蟹堡王和汉堡制作的一切知识</p>
+        <p>- 关于蟹堡王和汉堡制作的一切知识 -</p>
         <button class="magic-button" @click="goToMainPage">
           <span>召唤神奇海螺</span>
         </button>
