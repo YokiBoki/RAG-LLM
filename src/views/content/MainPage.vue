@@ -2,6 +2,17 @@
   <el-container class="layout-container-demo" style="height: 100%">
     <!-- 左侧导航栏 -->
     <el-aside width="100px" class="sidebar">
+      <!-- 添加气泡容器 -->
+      <div class="bubbles">
+        <div v-for="n in 20" :key="n" class="bubble" 
+             :style="{ 
+               '--delay': `${Math.random() * 8}s`, 
+               '--size': `${5 + Math.random() * 8}px`,
+               '--left': `${Math.random() * 100}%`
+             }">
+        </div>
+      </div>
+      
       <el-scrollbar>
         <div class="top1-logo nav-logo" @click="goToLogin">
           <img src="@/assets/images/hailuo.png"/>
@@ -105,6 +116,8 @@ const goToLogin = () => {
 }
 
 .sidebar {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(to bottom, 
     #1cb5e0 0%,
     #0069e0 20%,
@@ -272,5 +285,67 @@ const goToLogin = () => {
 
 .icon-button:hover .custom-icon {
   transform: scale(1.1);  /* 保持悬停效果 */
+}
+
+/* 修改气泡样式 */
+.bubble {
+  position: absolute;
+  left: var(--left);
+  bottom: -10px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  animation: rise 12s infinite ease-in;
+  animation-delay: var(--delay);
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  40% {
+    transform: translateY(-30vh) translateX(5px);
+  }
+  60% {
+    opacity: 0.7;
+  }
+  80% {
+    transform: translateY(-60vh) translateX(-5px);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(3px);
+    opacity: 0;
+  }
+}
+
+/* 添加一个更自然的摆动动画 */
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(-1px);
+  }
+  50% {
+    transform: translateX(1px);
+  }
+}
+
+.bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* 确保其他内容在气泡上层 */
+.el-scrollbar {
+  position: relative;
+  z-index: 1;
 }
 </style>
