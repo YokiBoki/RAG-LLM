@@ -179,23 +179,42 @@ const sendMessage = async () => {
       scrollToBottom();
     });
 
+    const loadingMessage = ref({
+      role: 'assistant',
+      content: '神奇海螺正在思考...',
+      loading: true // 标记为加载状态
+    });
+    currentConversation.value.messages.push(loadingMessage.value);
+    nextTick(() => {
+      scrollToBottom();
+    });
+
     // 获取AI回复
     try {
       const res = await get(API.GENERATE, {prompt: prompt});
       if (res.code == 100) {
-        currentConversation.value.messages.push({
-          role: 'assistant',
-          content: res.data
-        });
+        // 更新加载中的消息为实际回复
+        loadingMessage.value.content = res.data;
+        loadingMessage.value.loading = false; // 更新为非加载状态
         nextTick(() => {
           scrollToBottom();
         });
       } else {
         ElMessage.error(res.msg);
+        loadingMessage.value.content = '获取回复失败，请稍后重试';
+        loadingMessage.value.loading = false;
+        nextTick(() => {
+          scrollToBottom();
+        });
       }
     } catch (error) {
       console.error('sendMessage error', error);
       ElMessage.error('获取回复失败，请稍后重试');
+      loadingMessage.value.content = '获取回复失败，请稍后重试';
+      loadingMessage.value.loading = false;
+      nextTick(() => {
+        scrollToBottom();
+      });
     }
   }
 };
