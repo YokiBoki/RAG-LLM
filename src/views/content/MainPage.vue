@@ -14,8 +14,9 @@
       </div>
       
       <el-scrollbar>
-        <div class="top1-logo nav-logo" @click="goToLogin">
-          <img src="@/assets/images/hailuo.png"/>
+
+        <div class="nav-menu-item" @click="goToLogin">
+          <el-icon><HomeFilled /></el-icon>
         </div>
         
         <el-menu class="transparent-menu">
@@ -50,7 +51,7 @@
           <el-button class="icon-button" @click="handleToolsClick">
             <img src="@/assets/images/shezhi.png" class="custom-icon" />
           </el-button>
-          <el-button class="icon-button" @click="handleHomeClick">
+          <el-button class="icon-button" @click="goToLogin">
             <img src="@/assets/images/shouye.png" class="custom-icon" />
           </el-button>
         </div>
@@ -255,19 +256,19 @@ const goToLogin = () => {
   cursor: pointer;
 }
 
-.nav-logo img {
+.nav-logo el-icon {
   width: 50px;
   height: auto;
   margin: 30px 0;
   transition: transform 0.3s ease;
 }
 
-.nav-logo img:hover {
+.nav-logo el-icon:hover {
   transform: scale(1.1);
 }
 
 /* 为顶部图标添加特定样式 */
-.top1-logo img {
+.top1-logo el-icon {
   width: 50px;
   height: auto;
   margin: 30px 0;
