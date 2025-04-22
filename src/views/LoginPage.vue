@@ -8,10 +8,10 @@
     </div>
     <div class="content">
       <div class="center-content">
-        <h1>为什么不问问神奇海螺呢？</h1>
-        <p>- 关于蟹堡王和汉堡制作的一切知识 -</p>
+        <h1>健康知识问答系统</h1>
+        <p>- 关于老年人想知道的一切健康知识 -</p>
         <button class="magic-button" @click="goToMainPage">
-          <span>召唤神奇海螺</span>
+          <span>开始健康之旅</span>
         </button>
       </div>
     </div>
